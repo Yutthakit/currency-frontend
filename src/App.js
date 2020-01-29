@@ -1,26 +1,27 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import React, { Component } from 'react'
+import { Route } from "react-router-dom";
+import { Layout, Row, Col } from 'antd';
+import Signup from './Pasges/Signup';
+import Login from './Pasges/Login';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const { Header, Footer, Content } = Layout;
+
+export default class App extends Component {
+  render() {
+    return (
+      <Layout>
+        <Header>
+          Header
+        </Header>
+        <Content style={{ height: '90vh' }} >
+          <Route path="/signup" component={Signup} />
+          <Route path="/login" component={Login} />
+        </Content>
+        <Footer>
+          Footer
+        </Footer>
+      </Layout>
+    )
+  }
 }
-
-export default App;
