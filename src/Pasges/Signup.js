@@ -12,32 +12,35 @@ class Signup extends Component {
     })
   }
 
-  compareToFirstPassword = (rule, value, callback) => {
-    const { form } = this.props;
-    if (value && value !== form.getFieldValue('password')) {
-      callback('Two passwords that you enter is inconsistent!');
-    } else {
-      callback();
-    }
-  };
+  // compareToFirstPassword = (rule, value, callback) => {
+  //   const { form } = this.props;
+  //   if (value && value !== form.getFieldValue('password')) {
+  //     callback('Two passwords that you enter is inconsistent!');
+  //   } else {
+  //     callback();
+  //   }
+  // };
 
-  validateToNextPassword = (rule, value, callback) => {
-    const { form } = this.props;
-    if (value && this.state.confirmDirty) {
-      form.validateFields(['confirm'], { force: true });
-    }
-    callback();
-  };
+  // validateToNextPassword = (rule, value, callback) => {
+  //   const { form } = this.props;
+  //   if (value && this.state.confirmDirty) {
+  //     form.validateFields(['confirm'], { force: true });
+  //   }
+  //   callback();
+  // };
 
 
   handleSubmit = (e) => {
     e.preventDefault()
-    this.props.form.validateFieldsAndScroll((err, values) => {
+    console.log("google")
+    this.props.form.validateFields((err, values) => {
+      console.log(err)
       if (!err) {
         console.log('Received value of form', values)
       }
     })
   }
+
   render() {
 
     const { getFieldDecorator } = this.props.form;
@@ -59,7 +62,7 @@ class Signup extends Component {
         },
         sm: {
           span: 16,
-          offset: 8,
+          offset: 6,
         },
       },
     };
@@ -82,9 +85,9 @@ class Signup extends Component {
                 required: true,
                 message: 'Please input your password'
               },
-              {
-                validator: this.validateToNextPassword,
-              }
+              // {
+              //   validator: this.validateToNextPassword,
+              // }
             ],
           })(<Input />)
         } </Form.Item>
@@ -95,9 +98,9 @@ class Signup extends Component {
                 required: true,
                 message: 'Please input your password'
               },
-              {
-                validator: this.compareToFirstPassword,
-              },
+              // {
+              //   validator: this.compareToFirstPassword,
+              // },
             ],
           })(<Input />)
         } </Form.Item>
@@ -151,6 +154,11 @@ class Signup extends Component {
         <Form.Item  {...tailFormItemLayout} >
           <Button type="primary" htmlType="submit">
             Sign Up
+          </Button>
+        </Form.Item>
+        <Form.Item {...tailFormItemLayout}>
+          <Button htmlType="submit">
+            Already have an Account
           </Button>
         </Form.Item>
       </Form>

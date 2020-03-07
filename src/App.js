@@ -14,7 +14,7 @@ export default class App extends Component {
         <Header>
           Header
         </Header>
-        <Content style={{ height: '90vh' }} >
+        <Content >
           <Route path="/signup" component={Signup} />
           <Route path="/login" component={Login} />
         </Content>
