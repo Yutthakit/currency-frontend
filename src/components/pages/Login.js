@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import Axios from '../../config/axios.setup'
 import { Link } from "react-router-dom";
 import "./login.css"
-import { NotificationFilled } from "@ant-design/icons";
-import { Row, Col, Form, Input, Button } from 'antd';
+import { Row, Col, Form, Input, Button, notification } from 'antd';
+
+const Context = React.createContext({ name: 'Default' });
 
 const layout = {
   labelCol: {
@@ -22,10 +23,10 @@ const tailLayout = {
 
 const Login = () => {
   const onFinish = values => {
-    console.log( values);
+    console.log(values);
     Axios.post('/login', {
-      username :values.username,
-      password :values.password
+      username: values.username,
+      password: values.password
     })
       .then(result => {
         localStorage.setItem('ACCESS_TOKEN', result.data.token)
@@ -34,13 +35,21 @@ const Login = () => {
       })
       .catch(err => {
         console.log(err);
-        NotificationFilled()
+        failLoginNotification()
       })
     this.props.from.resetField()
   };
 
   const onFinishFailed = errorInfo => {
     console.log('Failed:', errorInfo);
+  };
+
+
+  const failLoginNotification = (message) => {
+    notification.open({
+      message: 'Login fail',
+      description: message,
+    });
   };
 
   return (
@@ -56,7 +65,7 @@ const Login = () => {
           onFinishFailed={onFinishFailed}
         >
           <Form.Item
-            style={{ width: "100%",justifyContent: 'center' }}
+            style={{ width: "100%", justifyContent: 'center' }}
             name="username"
             rules={[
               {
@@ -66,13 +75,13 @@ const Login = () => {
             ]}
           >
             <Input
-              style={{ backgroundColor: '#2A2C36', border: '#2A2C36',color:' #ffffff' }}
+              style={{ backgroundColor: '#2A2C36', border: '#2A2C36', color: ' #ffffff' }}
               placeholder="username"
             />
           </Form.Item>
 
           <Form.Item
-            style={{ width: "100%" ,justifyContent: 'center'}}
+            style={{ width: "100%", justifyContent: 'center' }}
             name="password"
             rules={[
               {
@@ -82,7 +91,7 @@ const Login = () => {
             ]}
           >
             <Input.Password
-              style={{ backgroundColor: '#2A2C36', border: '#2A2C36',color:' #ffffff' }}
+              style={{ backgroundColor: '#2A2C36', border: '#2A2C36', color: ' #ffffff' }}
               placeholder='Password'
             />
           </Form.Item>
