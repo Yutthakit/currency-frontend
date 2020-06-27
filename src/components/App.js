@@ -6,7 +6,6 @@ import SignUp from "./pages/SignUp";
 import ForgotPassword from "./pages/ForgotPassword";
 import ChangePassword from "./pages/changePassword";
 import Profile from "./pages/profile";
-import Feed from "./pages/Feed";
 
 function App() {
   return (
@@ -21,7 +20,6 @@ function App() {
         <Route exact path="/Profile" component={Profile} />
         
         <Route exact path="/">
-          <Feed />
         </Route>
         <Redirect to="/login" />
       </Switch>
