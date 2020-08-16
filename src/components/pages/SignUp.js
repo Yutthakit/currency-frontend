@@ -49,7 +49,8 @@ class SignUp extends Component {
     const styleInputBox = {
       backgroundColor: '#2A2C36',
       border: '#2A2C36',
-      color: '#ffffff'
+      color: '#ffffff',
+
     }
 
     const requireField = (v) => {
@@ -69,10 +70,10 @@ class SignUp extends Component {
             }}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}>
-            <Row>
+            <div>
               <h1 style={{ color: '#ffffff' }}>Sign Up</h1>
               <Form.Item
-                style={{ width: "100%" }}
+                style={{ width: "100%", justifyContent: 'center' }}
                 name="firstname"
                 rules={[requireField('name')]}
               >
@@ -82,7 +83,7 @@ class SignUp extends Component {
                 />
               </Form.Item>
               <Form.Item
-                style={{ width: "100%" }}
+                style={{ width: "100%", justifyContent: 'center' }}
                 name="surname"
                 rules={[requireField('surname')]}
               >
@@ -91,7 +92,7 @@ class SignUp extends Component {
                   placeholder="surname" />
               </Form.Item>
               <Form.Item
-                style={{ width: "100%" }}
+                style={{ width: "100%", justifyContent: 'center' }}
                 name="Email"
                 rules={[requireField('Email')]}
               >
@@ -100,7 +101,7 @@ class SignUp extends Component {
                   placeholder="Email" />
               </Form.Item>
               <Form.Item
-                style={{ width: "100%" }}
+                style={{ width: "100%", justifyContent: 'center' }}
                 name="phone"
                 rules={[requireField('Phone Number')]}
               >
@@ -108,31 +109,9 @@ class SignUp extends Component {
                   style={styleInputBox}
                   placeholder="phone" />
               </Form.Item>
+              
               <Form.Item
-                name="date-picker"
-                style={{ width: "100%" }}
-                rules={[requireField('Birth Date')]}
-              >
-                <DatePicker />
-              </Form.Item>
-
-              <Form.Item
-                style={{ width: "100%" }}
-                name="gender"
-                rules={[requireField('Gender')]}
-              >
-                <Radio.Group
-                  name="radiogroup"
-                  defaultValue={1}
-                  style={styleInputBox}
-                >
-                  <Radio value={'male'}>Male</Radio>
-                  <Radio value={'female'}>Female</Radio>
-                </Radio.Group>
-
-              </Form.Item>
-              <Form.Item
-                style={{ width: "100%", backgroundColor: '#2A2C36' }}
+                style={{ width: "100%", justifyContent: 'center' }}
                 name="username"
                 rules={[
                   requireField('Username'),
@@ -145,7 +124,7 @@ class SignUp extends Component {
                 />
               </Form.Item>
               <Form.Item
-                style={{ width: "100%", backgroundColor: '#2A2C36' }}
+                style={{ width: "100%", justifyContent: 'center' }}
                 name="password"
                 rules={[requireField('Password')]}
               >
@@ -154,7 +133,30 @@ class SignUp extends Component {
                   placeholder='Password'
                 />
               </Form.Item>
-            </Row>
+              <Form.Item
+                name="date-picker"
+                style={{ width: "100%", justifyContent: 'center' }}
+                rules={[requireField('Birth Date')]}
+              >
+                <DatePicker />
+              </Form.Item>
+
+              <Form.Item
+                style={{ width: "100%", justifyContent: 'center' }}
+                name="gender"
+                rules={[requireField('Gender')]}
+              >
+                <Radio.Group
+                  name="radiogroup"
+                  defaultValue={1}
+                  
+                >
+                  <Radio style={{color: 'white'}} value={'male'}>Male</Radio>
+                  <Radio style={{color: 'white'}} value={'female'}>Female</Radio>
+                </Radio.Group>
+
+              </Form.Item>
+            </div>
 
             <Row justify='end'>
               <Col style={{ color: '#ffffff', marginBottom: '1rem' }}>
