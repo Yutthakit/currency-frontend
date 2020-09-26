@@ -20,7 +20,11 @@ class Profile extends Component {
     this.token = localStorage.getItem('ACCESS_TOKEN')
   }
   componentDidMount() {
-    this.callService()
+    if (this.token) {
+      this.callService()
+    } else (
+      this.props.history.push("/login")
+    )
   }
 
   callService = () => {

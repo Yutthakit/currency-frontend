@@ -24,9 +24,14 @@ class Login extends Component {
   constructor(props) {
     super(props)
     this.state = {}
+    this.token = localStorage.getItem('ACCESS_TOKEN')
   }
 
-
+  componentDidMount() {
+    if(this.token) {
+      this.props.history.push("/")
+    }
+  }
 
 
   render() {
@@ -49,7 +54,7 @@ class Login extends Component {
     }
 
     const redirect = () => {
-      this.props.history.push("/profile")
+      window.location ="/"
     }
 
 
