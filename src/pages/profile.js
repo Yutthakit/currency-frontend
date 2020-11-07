@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { Row, Col, Form, Input, Button, Avatar } from "antd";
+import { Row, Col, Form, Input, Button, Avatar, Layout} from "antd";
 import { UserOutlined } from '@ant-design/icons';
 import moment from 'moment'
 import Axios from 'axios';
-
+import SideNav from '../components/widget/SideNav'
+const { Header, Content, Footer, Sider } = Layout;
 class Profile extends Component {
 
   constructor(props) {
@@ -22,9 +23,9 @@ class Profile extends Component {
   componentDidMount() {
     if (this.token) {
       this.callService()
-    } else (
+    } else {
       this.props.history.push("/login")
-    )
+    }
   }
 
   callService = () => {
@@ -98,9 +99,20 @@ class Profile extends Component {
 
     if (name !== 'name') {
       return (
-        <Row style={{ height: "100vh", backgroundColor: '#1E1F28' }} justify="center" align="middle" >
+        <div>
+          <Layout>
+          <Sider>            
+            <SideNav props={this.props} />
+          </Sider>
+            <Layout>
+              <Header>
+                <h2 className="color-white">
+                Profile
+                </h2>
+              </Header>
+              <Content>
+              <Row style={{ height: "100vh", backgroundColor: '#1E1F28' }} justify="center" align="middle" >
           <Col xs={20} sm={9} md={9} lg={8} xl={6} xxl={5}>
-            <h1 style={{ color: '#ffffff' }}>USER ID</h1>
             <Form
               onFinish={this.onFinish}
               onFinishFailed={this.onFinishFailed}
@@ -171,6 +183,12 @@ class Profile extends Component {
             </Form>
           </Col>
         </Row >
+              </Content>
+              <Footer>Footer</Footer>
+            </Layout>
+        </Layout>
+        </div>
+        
       )
     } else {
       return 'name'

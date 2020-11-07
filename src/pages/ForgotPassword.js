@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Axios from '../../config/axios.setup'
+import Axios from '../config/axios.setup'
 import { Row, Col, Form, Input, Button, notification } from "antd";
 
 class ForgotPassword extends Component {

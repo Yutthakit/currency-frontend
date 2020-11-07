@@ -1,3 +1,7 @@
 .ant-input-affix-wrapper > input.ant-input {
   color: white;
 }
+
+.color-red {
+  color: red;
+}

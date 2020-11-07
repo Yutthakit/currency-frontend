@@ -1,0 +1,22 @@
+.balance {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid white;
+}
+
+.col-1 {
+  color: white;
+  padding: 5px 11px;
+}
+.col-2 {
+  color: white;
+  padding: 5px 11px;
+}
+
+.width-select {
+  width: 100%;
+  background-color: rgb(30, 31, 40);
+  color: white;
+  border: 1px solid white;
+  padding: 7px 7px;
+}

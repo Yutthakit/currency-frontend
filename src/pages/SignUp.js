@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import Axios from '../../config/axios.setup'
+import Axios from '../config/axios.setup'
 import { Link } from "react-router-dom";
 import moment from "moment"
 import "./login.css"
-import { Row, Col, Form, Input, Button, DatePicker, Radio } from 'antd';
-
+import { Row, Col, Form, Input, Button, DatePicker, Radio, Upload, Avatar } from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
 const layout = {
   labelCol: {
     span: 8,
@@ -14,12 +14,17 @@ const layout = {
   },
 };
 
+
+
 class SignUp extends Component {
 
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {
+      avatar: null
+    }
     this.token = localStorage.getItem('ACCESS_TOKEN')
+
   }
 
   componentDidMount() {
@@ -30,7 +35,8 @@ class SignUp extends Component {
 
   render() {
     const onFinish = values => {
-      Axios.post('/register', {
+      // if (this.state.avatar !== null) {
+        Axios.post('/register', {
         name: values.firstname,
         surname: values.surname,
         username: values.username,
@@ -38,7 +44,8 @@ class SignUp extends Component {
         tel: values.phone,
         birth_date: moment(values['date-picker']).format("MM-DD-YYYY"),
         email: values.Email,
-        gender: values.gender
+        gender: values.gender,
+        // avatar: this.state.avatar
 
       })
         .then(() => {
@@ -47,6 +54,7 @@ class SignUp extends Component {
         .catch(err => {
           console.log(err);
         })
+      // }
     };
 
     const onFinishFailed = errorInfo => {
@@ -59,6 +67,19 @@ class SignUp extends Component {
       color: '#ffffff',
 
     }
+
+    const onFileChange = e => {
+      const blob = e.target.files[0]
+      const reader = new FileReader()
+      reader.readAsDataURL(blob)
+      reader.onloadend = () => {
+          const base64data = reader.result
+          this.setState({
+            avatar: base64data,
+          },() => console.log(this.state.avatar))
+      }
+      
+  }
 
     const requireField = (v) => {
       console.log(v)
@@ -163,6 +184,15 @@ class SignUp extends Component {
                 </Radio.Group>
 
               </Form.Item>
+              <Form.Item
+              style={{ width: "100%", justifyContent: 'center' }}
+              >
+                 <input
+              type='file'
+              onChange={onFileChange}
+              />
+              </Form.Item>
+             
             </div>
 
             <Row justify='end'>
@@ -176,7 +206,7 @@ class SignUp extends Component {
             <Row justify="space-around">
               <Col>
                 <Button htmlType="submit" type="danger">
-                  Sign Up
+                  register
                 </Button>
               </Col>
             </Row>
@@ -189,5 +219,3 @@ class SignUp extends Component {
 
 }
 export default SignUp
-
-
