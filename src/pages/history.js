@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import { Input,Table, Tag, Space, Layout } from "antd";
-import { UserOutlined } from '@ant-design/icons';
+import { Table, Tag, Layout } from "antd";
 import moment from 'moment'
 import Axios from 'axios';
 import SideNav from '../components/widget/SideNav'
@@ -11,6 +10,7 @@ const columns = [
     title: 'Action',
     dataIndex: 'action',
     key: 'action',
+    // eslint-disable-next-line
     render: text => <a>{text}</a>,
   },
   {
@@ -139,7 +139,7 @@ class History extends Component {
   }
 
   render() {
-    const { name, surname, email, tel, gender, birth_date } = this.state
+    const { name } = this.state
 
 
     if (name !== 'name') {

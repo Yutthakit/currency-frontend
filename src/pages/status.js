@@ -4,7 +4,7 @@ import { AiFillCheckCircle, AiFillCloseCircle } from "react-icons/ai";
 import { Row, Col, Layout } from 'antd';
 import { Link } from "react-router-dom";
 import SideNav from '../components/widget/SideNav'
-const { Header, Content, Footer, Sider } = Layout;
+const { Header, Content, Sider } = Layout;
 
 export default function status(props) {
   const show = props.match.params.params

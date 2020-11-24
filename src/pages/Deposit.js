@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import Axios from '../config/axios.setup'
 import SideNav from '../components/widget/SideNav'
 import "./Deposit.css"
-import { Layout, Row, Col, Tooltip, Button, Input } from 'antd';
-const { Header, Content, Footer, Sider } = Layout;
+import { Layout, Row, Col, Button, Input } from 'antd';
+const { Header, Content, Sider } = Layout;
 class ShowStatus extends Component {
 
   constructor(props) {

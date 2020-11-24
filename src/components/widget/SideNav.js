@@ -1,19 +1,11 @@
-import React, { useState, useEffect, memo } from 'react'
+import React, { useState, useEffect } from 'react'
 import Axios from 'axios';
-import { div } from 'react-router-dom';
 import './sideNav.css'
 const SideNav = (props) => {
-  const [visible, setVisible] = useState(false);
   const [name, nameSet] = useState(null);
   const [balance, nameBalance] = useState(null);
   const [token, settoken] = useState(localStorage.getItem('ACCESS_TOKEN'))
-  const showDrawer = () => {
-    setVisible(true);
-  };
-  const onClose = () => {
-    setVisible(false);
-  };
-
+  // eslint-disable-next-line
   useEffect(() => {
     if(token) {
       callService()

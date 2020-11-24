@@ -1,11 +1,9 @@
 import React, { Component } from "react";
 import Axios from '../config/axios.setup'
-import { Link } from "react-router-dom";
-import Status from './status'
 import SideNav from '../components/widget/SideNav'
 import "./withdraw.css"
-import { Layout, Row, Col, Tooltip, Button, Input } from 'antd';
-const { Header, Content, Footer, Sider } = Layout;
+import { Layout, Row, Col, Button, Input } from 'antd';
+const { Header, Content, Sider } = Layout;
 class WithDraw extends Component {
 
   constructor(props) {

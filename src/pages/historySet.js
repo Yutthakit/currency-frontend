@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
-import { Input,Table, Tag, Space, Layout } from "antd";
-import { UserOutlined } from '@ant-design/icons';
+import { Table, Tag, Space, Layout } from "antd";
 import moment from 'moment'
 import Axios from 'axios';
 import SideNav from '../components/widget/SideNav'
-const { Header, Content, Footer, Sider } = Layout;
+const { Header, Content, Sider } = Layout;
 
 const data = [
   {
@@ -56,6 +55,7 @@ const columns = [
     title: 'Name',
     dataIndex: 'name',
     key: 'name',
+    // eslint-disable-next-line
     render: text => <a>{text}</a>,
   },
   {
@@ -91,9 +91,13 @@ const columns = [
   {
     title: 'Action',
     key: 'action',
-    render: (text, record) => (
+    // eslint-disable-next-line
+    render: ( record) => (
+        // eslint-disable-next-line
       <Space size="middle">
+        {/* eslint-disable-next-line */}
         <a>Invite {record.name}</a>
+        {/* eslint-disable-next-line */}
         <a>Delete</a>
       </Space>
     ),
@@ -175,7 +179,7 @@ class HistorySet extends Component {
   }
 
   render() {
-    const { name, surname, email, tel, gender, birth_date } = this.state
+    const { name } = this.state
 
 
     if (name !== 'name') {

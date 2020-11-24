@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import ChartBTC from "../components/widget/chartBTC";
-import LineDemo from "../components/widget/chartETH";
+import ChartETH from "../components/widget/chartETH";
 import ChartXRP from "../components/widget/chartXRP";
 import ChartLTC from "../components/widget/chartLTC";
 import SideNav from '../components/widget/SideNav'
 import { Layout,Row, Col, Button, Tabs } from "antd";
 import "./home.css"
+
 const { TabPane } = Tabs;
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -13,9 +14,9 @@ const { Header, Content, Footer, Sider } = Layout;
   constructor(props) {
     super(props)
     this.state = {
-      token: localStorage.getItem('ACCESS_TOKEN')
+      token: localStorage.getItem('ACCESS_TOKEN'),
     }
-   }
+  }
 
   componentDidMount() {
    if(this.state.token === null){
@@ -42,17 +43,17 @@ const { Header, Content, Footer, Sider } = Layout;
               <Tabs defaultActiveKey="1" centered>
                 <TabPane tab="BTC" key="1">
                 <div className="width-chart">
-                <ChartBTC/>
+                  <ChartBTC/>
                 </div>
                 </TabPane>
                 <TabPane tab="LTC" key="2">
                 <div className="width-chart">
-                <ChartLTC/>
+                  <ChartLTC/>
                 </div>
                 </TabPane>
                 <TabPane tab="ETH" key="3">
                 <div className="width-chart">
-                  <LineDemo/>
+                  <ChartETH/>
                 </div>
                 </TabPane>
                 <TabPane tab="XRP" key="4">
@@ -89,7 +90,6 @@ const { Header, Content, Footer, Sider } = Layout;
                     </h2>
                   </Col>
                 </Row>
-                {/* <LineDemo/> */}
               </Content>
               <Footer>Footer</Footer>
             </Layout>

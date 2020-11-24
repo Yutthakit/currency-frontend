@@ -3,8 +3,7 @@ import Axios from '../config/axios.setup'
 import { Link } from "react-router-dom";
 import moment from "moment"
 import "./login.css"
-import { Row, Col, Form, Input, Button, DatePicker, Radio, Upload, Avatar } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
+import { Row, Col, Form, Input, Button, DatePicker, Radio } from 'antd';
 const layout = {
   labelCol: {
     span: 8,
