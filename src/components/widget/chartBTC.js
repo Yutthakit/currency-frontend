@@ -1,139 +1,145 @@
-import React, {
-  Component
-} from 'react'
-import Chart from "react-apexcharts";
-const ApexCharts = window.ApexCharts
-var lastDate = 0;
-var data = []
-var TICKINTERVAL = 86400000
-let XAXISRANGE = 777600000
+import React, { Component } from "react";
+import { Line } from "react-chartjs-2";
+import { Modal, Button, InputNumber } from "antd";
+import Axios from '../../config/axios.setup'
 
-class chartBTC extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      series: [{
-        data: data.slice()
-      }],
-      options: {
-        chart: {
-          id: 'realtime',
-          height: 200,
-          type: 'line',
-          animations: {
-            enabled: true,
-            easing: 'linear',
-            dynamicAnimation: {
-              speed: 1000
-            }
-          },
-          toolbar: {
-            show: false
-          },
-          zoom: {
-            enabled: false
-          }
-        },
-        dataLabels: {
-          enabled: false
-        },
-        stroke: {
-          curve: 'smooth'
-        },
-        title: {
-          text: 'Dynamic Updating Chart',
-          align: 'left'
-        },
-        markers: {
-          size: 0
-        },
-        xaxis: {
-          type: 'datetime',
-          range: XAXISRANGE,
-        },
-        yaxis: {
-          max: 100
-        },
-        legend: {
-          show: false
-        },
-      },
-    }
-  }
+export default class chartBTC extends Component {
+
+  state = {
+    visible: false,
+    name: '',
+    price: 0,
+    investPerUnit: 0,
+    amount: 0,
+    type: '',
+    data: {
+      labels: ["January", "February", "March", "April", "May", "June", "July"],
+      datasets: [
+        {
+            label: "current",
+            fill: false,
+            lineTension: 0.3,
+            backgroundColor: "rgba(75,192,192,0.4)",
+            borderColor: "rgba(75,192,192,1)",
+            borderCapStyle: "butt",
+            borderDash: [],
+            borderDashOffset: 0.0,
+            borderJoinStyle: "miter",
+            pointBorderColor: "rgba(75,192,192,0)",
+            pointBackgroundColor: "rgba(75,192,192,1)",
+            pointBorderWidth: 1.5,
+            pointHoverRadius: 5,
+            pointHoverBackgroundColor: "rgba(75,192,192,1)",
+            pointHoverBorderColor: "rgba(220,220,220,0)",
+            pointHoverBorderWidth: 2,
+            pointRadius: 1,
+            pointHitRadius: 10,
+          data: [65, 59, 80, 81, 56, 55, 111]
+        }
+      ]}
+  };
 
   componentDidMount() {
-    this.getDayWiseTimeSeries(new Date().getTime(), 10, {
-      min: 10,
-      max: 90
-    })
-    window.setInterval(() => {
-      this.getNewSeries(lastDate, {
-        min: 10,
-        max: 90
+    this.getDateAndPrice()
+  }
+
+  getDateAndPrice() {
+    Axios.get('/static/history/btc').then((result) => {
+      this.getData(result.data)
+    }).catch((err) => {
+      console.log(err)
+    });
+  }
+
+  getData = (data) => {
+    if (data) {
+      this.setState({
+        amount: data.price[9],
+        data: { 
+          labels : data.date,
+          datasets:[
+            {
+              label: "current",
+              fill: false,
+              lineTension: 0.3,
+              backgroundColor: "rgba(75,192,192,0.4)",
+              borderColor: "rgba(75,192,192,1)",
+              borderCapStyle: "butt",
+              borderDash: [],
+              borderDashOffset: 0.5,
+              borderJoinStyle: "miter",
+              pointBorderColor: "rgba(75,192,192,0)",
+              pointBackgroundColor: "rgba(75,192,192,1)",
+              pointBorderWidth: 1.5,
+              pointHoverRadius: 5,
+              pointHoverBackgroundColor: "rgba(75,192,192,1)",
+              pointHoverBorderColor: "rgba(220,220,220,0)",
+              pointHoverBorderWidth: 2,
+              pointRadius: 1,
+              pointHitRadius: 10,
+              data: data.price
+            }
+          ]
+        }
       })
-
-      ApexCharts.exec('realtime', 'updateSeries', [{
-        data: data
-      }])
-    }, 10000)
+    }
   }
 
-  getDayWiseTimeSeries = (baseval, count, yrange) => {
-    var i = 0;
-    while (i < count) {
-      var x = baseval;
-      var y = Math.floor(Math.random() * (yrange.max - yrange.min + 1)) + yrange.min;
+  showModal = (type) => {
+    this.setState({
+      visible: true,
+      name: 'BTC',
+      price: this.state.data.datasets[0].data[9],
+      type: type
+    });
+  };
 
-      data.push({
-        x,
-        y
-      });
-      lastDate = baseval
-      baseval += TICKINTERVAL;
-      i++;
-    }
+  handleOk = () => {
+    this.setState({
+      visible: false,
+    });
+  };
 
-  }
+  handleCancel = () => {
+    this.setState({
+      visible: false,
+    });
+  };
 
-
-  getNewSeries = (baseval, yrange) => {
-    var newDate = baseval + TICKINTERVAL;
-    lastDate = newDate
-
-    for (var i = 0; i < data.length - 10; i++) {
-      // IMPORTANT
-      // we reset the x and y of the data which is out of drawing area
-      // to prevent memory leaks
-      data[i].x = newDate - XAXISRANGE - TICKINTERVAL
-      data[i].y = 0
-    }
-
-    data.push({
-      x: newDate,
-      y: Math.floor(Math.random() * (yrange.max - yrange.min + 1)) + yrange.min
+  onChange = (value) => {
+    this.setState({
+      investPerUnit: value,
+      amount: value * this.state.price
     })
-  }
-
-  resetData = () => {
-    // Alternatively, you can also reset the data at certain intervals to prevent creating a huge series 
-    data = data.slice(data.length - 10, data.length);
   }
 
   render() {
-    return ( 
-    <div className = "col-3" > {
-        this.state.series &&
-        <Chart
-        options = {
-          this.state.options
-        }
-        series = {
-          this.state.series
-        }
+    return (
+      <div>
+        <h2>BTC</h2>
+        <Line
+          ref="chart"
+          data={this.state.data}
         />
-      } 
-    </div>
-    )
+        <Button type="primary" onClick={() => this.showModal('buy')}>
+            Buy
+        </Button>
+        <Button type="primary" onClick={() => this.showModal('sell')}>
+            Sell
+        </Button>
+        <Modal
+          title={this.state.name}
+          visible={this.state.visible}
+          onOk={this.handleOk}
+          onCancel={this.handleCancel}
+        >
+          <p>Current Price : { this.state.price }</p>
+          <p>Value Investment/Divestment : <InputNumber price={this.state.price} min={0.01} max={1000} defaultValue={1} onChange={this.onChange} /> </p>
+          <p>Amount : { this.state.amount  }</p>
+        </Modal>
+      </div>
+    );
   }
+
+
 }
-export default chartBTC

@@ -3,7 +3,7 @@ import { Line } from "react-chartjs-2";
 import { Modal, Button, InputNumber } from "antd";
 import Axios from '../../config/axios.setup'
 
-export default class LineDemo extends Component {
+export default class chartETH extends Component {
 
   state = {
     visible: false,
@@ -11,6 +11,7 @@ export default class LineDemo extends Component {
     price: 0,
     investPerUnit: 0,
     amount: 0,
+    type: '',
     data: {
       labels: ["January", "February", "March", "April", "May", "June", "July"],
       datasets: [
@@ -43,7 +44,7 @@ export default class LineDemo extends Component {
   }
 
   getDateAndPrice() {
-    Axios.get('/static/history/btc').then((result) => {
+    Axios.get('/static/history/eth').then((result) => {
       this.getData(result.data)
     }).catch((err) => {
       console.log(err)
@@ -84,25 +85,22 @@ export default class LineDemo extends Component {
     }
   }
 
-  showModal = () => {
+  showModal = (type) => {
     this.setState({
       visible: true,
       name: 'ETH',
       price: this.state.data.datasets[0].data[9],
-    }, () => {
-
+      type: type
     });
   };
 
-  handleOk = e => {
-    console.log(e);
+  handleOk = () => {
     this.setState({
       visible: false,
     });
   };
 
-  handleCancel = e => {
-    console.log(e);
+  handleCancel = () => {
     this.setState({
       visible: false,
     });
@@ -118,13 +116,16 @@ export default class LineDemo extends Component {
   render() {
     return (
       <div>
-        <h2>Line Example</h2>
+        <h2>ETH</h2>
         <Line
           ref="chart"
           data={this.state.data}
         />
-        <Button type="primary" onClick={this.showModal}>
-            Open Modal
+        <Button type="primary" onClick={() => this.showModal('buy')}>
+            Buy
+        </Button>
+        <Button type="primary" onClick={() => this.showModal('sell')}>
+            Sell
         </Button>
         <Modal
           title={this.state.name}
@@ -132,9 +133,9 @@ export default class LineDemo extends Component {
           onOk={this.handleOk}
           onCancel={this.handleCancel}
         >
-          <p>{ this.state.price }</p>
-          <InputNumber price={this.state.price} min={1} max={1000} defaultValue={0} onChange={this.onChange} />
-          <p>{ this.state.amount  }</p>
+          <p>Current Price : { this.state.price }</p>
+          <p>Value Investment/Divestment : <InputNumber price={this.state.price} min={0.01} max={1000} defaultValue={1} onChange={this.onChange} /> </p>
+          <p>Amount : { this.state.amount  }</p>
         </Modal>
       </div>
     );
