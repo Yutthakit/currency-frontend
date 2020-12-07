@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Axios from 'axios';
 import './sideNav.css'
+import avatar from '../widget/image/avatars.jpg'
 const SideNav = (props) => {
   const [name, nameSet] = useState(null);
   const [balance, nameBalance] = useState(null);
@@ -13,7 +14,7 @@ const SideNav = (props) => {
     } else {
       this.props.history.push("/login")
     }
-  }, [])
+  }, [balance])
 
 
   const callService = () => {
@@ -45,7 +46,7 @@ const SideNav = (props) => {
 
   const redireact = (value) => {
     if (value === 1) {
-      props.props.history.push("/");
+      props.props.history.push(`/${balance}`)
     } else if (value === 2) {
       props.props.history.push("/Profile");
     } else if (value === 3) {
@@ -64,15 +65,15 @@ const SideNav = (props) => {
       <div>
         <div className="margin-space">
           <div>
-            <img src="https://scontent.fbkk9-2.fna.fbcdn.net/v/t1.0-9/99439973_1580999265386599_6972214934960603136_n.jpg?_nc_cat=109&ccb=2&_nc_sid=09cbfe&_nc_eui2=AeGD1S0HzZYcFLKWrOiMB_T4Dx7BbTRnZgcPHsFtNGdmBxyMfaU-8LGo_7hqtqHBZTeQigWwYBO7SjCBwUGIdDjo&_nc_ohc=fj-qCSncjzYAX_rEo0Z&_nc_ht=scontent.fbkk9-2.fna&oh=fac976ef61a25b2771e76ab4a5158811&oe=5FCA3B0C" alt="profile" className="img-profile" />
+            <img src={avatar} alt="profile" className="img-profile" />
           </div>
           <div className="nav-side">
             Name : {name}
           </div>
           <div className="nav-side">
-            Balance : {balance ? balance : 0}
+            Balance : {balance ? balance.toLocaleString() : 0} THB
           </div>
-          <div className="nav-side">
+          <div className="nav-side border-nav">
           <div
           className="curser"
           onClick={() => redireact(1)}
@@ -81,7 +82,7 @@ const SideNav = (props) => {
             deshboard
           </div>
           </div>
-          <div className="nav-side">
+          <div className="nav-side border-nav">
           <div 
           className="curser"
           onClick={() => redireact(2)}
@@ -90,7 +91,7 @@ const SideNav = (props) => {
             Profile
           </div>
           </div>
-          <div className="nav-side">
+          <div className="nav-side border-nav">
           <div 
           className="curser"
           onClick={() => redireact(3)}
@@ -99,7 +100,7 @@ const SideNav = (props) => {
             Deposit
           </div>
           </div>
-          <div className="nav-side">
+          <div className="nav-side border-nav">
           <div
           className="curser"
           onClick={() => redireact(4)}
@@ -108,7 +109,7 @@ const SideNav = (props) => {
           Withdrawal
           </div>
           </div>
-          <div className="nav-side">
+          <div className="nav-side border-nav">
           <div 
           className="curser"
           onClick={() => redireact(5)}
@@ -117,7 +118,7 @@ const SideNav = (props) => {
             History Payment
           </div>
           </div>
-          <div className="nav-side">
+          <div className="nav-side border-nav">
           <div
           className="curser"
           onClick={() => redireact(6)}
@@ -126,7 +127,7 @@ const SideNav = (props) => {
             History Set
           </div>
           </div>
-          <div className="nav-side">
+          <div className="nav-side border-nav">
           <div 
           className="curser"
           onClick={logOut}

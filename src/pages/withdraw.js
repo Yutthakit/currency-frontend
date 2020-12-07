@@ -101,10 +101,8 @@ class WithDraw extends Component {
               </div>
                <Input
                  style={{ backgroundColor: '#2A2C36', color: '#FFFFFF' }}
-                 type="number"
-                 prefix="$"
-                 suffix="USD"
-                 placeholder="Number Account"
+                 type="text"
+                 prefix="Number Account"
                  defaultValue="13911356879"
                  onChange={this.onChange2}
                />

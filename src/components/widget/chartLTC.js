@@ -14,6 +14,7 @@ import Axios from '../../config/axios.setup'
 export default class chartLTC extends Component {
 
   state = {
+    sell: null,
     visible: false,
     name: '',
     price: 0,
@@ -51,7 +52,9 @@ export default class chartLTC extends Component {
   }
 
   getDateAndPrice() {
-    Axios.get('/static/history/ltc').then((result) => {
+    Axios.get('/static/history/ltc', {
+      user: localStorage.getItem('ACCESS_TOKEN')
+    }).then((result) => {
       this.getData(result.data)
     }).catch((err) => {
       console.log(err)
@@ -72,7 +75,14 @@ export default class chartLTC extends Component {
       currency_name: name,
       currency_price_purchase: price,
     }).then(() => {
-      console.log('success')
+      Axios.get('/profile', {
+        user: localStorage.getItem('ACCESS_TOKEN')
+      })
+        .then((result) => {
+          window.location=`/${result.data.Balance}`
+        }).catch((err) => {
+          console.log(err);
+        });
     }).catch((err) => {
       console.log(err)
     });
@@ -89,7 +99,14 @@ export default class chartLTC extends Component {
       currency_name: name,
       currency_price_sell: price,
     }).then((result) => {
-      console.log(result)
+      Axios.get('/profile', {
+        user: localStorage.getItem('ACCESS_TOKEN')
+      })
+        .then((result) => {
+          window.location=`/${result.data.Balance}`
+        }).catch((err) => {
+          console.log(err);
+        });
     }).catch((err) => {
       console.log(err)
     });
@@ -98,6 +115,7 @@ export default class chartLTC extends Component {
   getData = (data) => {
     if (data) {
       this.setState({
+        sell: data.has_invest,
         amount: data.price[9],
         data: {
           labels: data.date,
@@ -177,6 +195,7 @@ export default class chartLTC extends Component {
         </Button> 
         <Button type = "primary"
          onClick = {() => this.showModal('sell')} 
+         disabled={this.state.sell ? false : true}
         >
           Sell
         </Button> 

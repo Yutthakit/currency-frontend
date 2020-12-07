@@ -13,41 +13,6 @@ const data = [
     address: 'New York No. 1 Lake Park',
     tags: ['nice', 'developer'],
   },
-  {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-    tags: ['loser'],
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-  },
-  {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-    tags: ['nice', 'developer'],
-  },
-  {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-    tags: ['loser'],
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-  },
 ];
 
 const columns = [
@@ -59,49 +24,44 @@ const columns = [
     render: text => <a>{text}</a>,
   },
   {
-    title: 'Age',
-    dataIndex: 'age',
-    key: 'age',
+    title: 'Value Invest',
+    dataIndex: 'value_invest',
+    key: 'value_invest',
   },
   {
-    title: 'Address',
-    dataIndex: 'address',
-    key: 'address',
+    title: 'Actual value',
+    dataIndex: 'actual_value',
+    key: 'actual_value',
+  },
+  {
+    title: 'Market Value',
+    dataIndex: 'market_value',
+    key: 'market_value'
   },
   {
     title: 'Tags',
-    key: 'tags',
-    dataIndex: 'tags',
-    render: tags => (
+    key: 'percent',
+    dataIndex: 'percent',
+    render: percent => (
       <>
-        {tags.map(tag => {
-          let color = tag.length > 5 ? 'geekblue' : 'green';
-          if (tag === 'loser') {
-            color = 'volcano';
-          }
-          return (
-            <Tag color={color} key={tag}>
-              {tag.toUpperCase()}
+        {percent > 0 ?
+            <Tag color="green">
+              {percent}
             </Tag>
-          );
-        })}
+        :
+        <Tag color="red">
+              {percent}
+            </Tag>
+        }
       </>
     ),
   },
   {
-    title: 'Action',
-    key: 'action',
-    // eslint-disable-next-line
-    render: ( record) => (
-        // eslint-disable-next-line
-      <Space size="middle">
-        {/* eslint-disable-next-line */}
-        <a>Invite {record.name}</a>
-        {/* eslint-disable-next-line */}
-        <a>Delete</a>
-      </Space>
-    ),
+    title: 'value per unit',
+    dataIndex: 'value_per_unit',
+    key: 'value_per_unit'
   },
+  
 ];
 
 class HistorySet extends Component {
@@ -109,6 +69,7 @@ class HistorySet extends Component {
   constructor(props) {
     super(props)
     this.state = {}
+    this.state.data = data
     this.state.Avatar = 'name'
     this.state.name = 'name'
     this.state.surname = 'name'
@@ -129,7 +90,7 @@ class HistorySet extends Component {
 
   callService = () => {
 
-    Axios.get('/profile', {
+    Axios.get('/profitloss/profile', {
       user: this.token
     })
       .then((result) => {
@@ -139,15 +100,11 @@ class HistorySet extends Component {
       });
   }
 
-  getData = (dataUser) => {
-    if (dataUser) {
+  getData = (value) => {
+    const filter = value.filter(item => item.percent !== "NaN" )
+    if (filter) {
       this.setState({
-        name: dataUser.name,
-        surname: dataUser.surname,
-        email: dataUser.email,
-        tel: dataUser.tel,
-        gender: dataUser.gender,
-        birth_date: moment(dataUser.birth_date).format("MM-DD-YYYY"),
+        data: filter
       })
     }
   }
@@ -182,7 +139,7 @@ class HistorySet extends Component {
     const { name } = this.state
 
 
-    if (name !== 'name') {
+    // if (name !== 'name') {
       return (
         <div>
           <Layout>
@@ -196,16 +153,16 @@ class HistorySet extends Component {
                 </h2>
               </Header>
               <Content>
-                <Table columns={columns} dataSource={data} pagination={false} />
+                <Table columns={columns} dataSource={this.state.data} pagination={false} />
               </Content>
             </Layout>
           </Layout>
         </div>
         
       )
-    } else {
-      return 'name'
-    }
+    // } else {
+    //   return 'name'
+    // }
   }
 }
 

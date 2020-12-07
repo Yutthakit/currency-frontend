@@ -6,6 +6,7 @@ import Axios from '../../config/axios.setup'
 export default class chartBTC extends Component {
 
   state = {
+    sell: null,
     visible: false,
     name: '',
     price: 0,
@@ -44,7 +45,9 @@ export default class chartBTC extends Component {
   }
 
   getDateAndPrice() {
-    Axios.get('/static/history/btc').then((result) => {
+    Axios.get('/static/history/btc', {
+      user: localStorage.getItem('ACCESS_TOKEN')
+    }).then((result) => {
       this.getData(result.data)
     }).catch((err) => {
       console.log(err)
@@ -65,14 +68,20 @@ export default class chartBTC extends Component {
       currency_name: name,
       currency_price_purchase: price,
     }).then(() => {
-      console.log('success')
+      Axios.get('/profile', {
+        user: localStorage.getItem('ACCESS_TOKEN')
+      })
+        .then((result) => {
+          window.location=`/${result.data.Balance}`
+        }).catch((err) => {
+          console.log(err);
+        });
     }).catch((err) => {
       console.log(err)
     });
   }
 
   sellCurrency() {
-    console.log('test')
     const {
       investPerUnit,
       name,
@@ -83,19 +92,23 @@ export default class chartBTC extends Component {
       currency_name: name,
       currency_price_sell: price,
     }).then((result) => {
-      console.log(result)
+      Axios.get('/profile', {
+        user: localStorage.getItem('ACCESS_TOKEN')
+      })
+        .then((result) => {
+          window.location=`/${result.data.Balance}`
+        }).catch((err) => {
+          console.log(err);
+        });
     }).catch((err) => {
-      if(err.message === 'Request failed with status code 308'){
-        this.setState({
-          messageError: 'Not'
-        })
-      }
+      console.log(err);
     });
   }
 
   getData = (data) => {
     if (data) {
       this.setState({
+        sell: data.has_invest,
         amount: data.price[9],
         data: { 
           labels : data.date,
@@ -176,7 +189,7 @@ export default class chartBTC extends Component {
         <Button type="primary" onClick={() => this.showModal('buy')}>
             Buy
         </Button>
-        <Button type="primary" onClick={() => this.showModal('sell')}>
+        <Button disabled={this.state.sell ? false : true} type="primary" onClick={() => this.showModal('sell')}>
             Sell
         </Button>
         <Modal

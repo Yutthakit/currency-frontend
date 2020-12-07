@@ -8,7 +8,7 @@ import { Layout,Row, Col, Button, Tabs } from "antd";
 import "./home.css"
 
 const { TabPane } = Tabs;
-const { Header, Content, Footer, Sider } = Layout;
+const { Header, Content, Sider } = Layout;
 
  class Home extends Component {
   constructor(props) {
@@ -91,7 +91,6 @@ const { Header, Content, Footer, Sider } = Layout;
                   </Col>
                 </Row>
               </Content>
-              <Footer>Footer</Footer>
             </Layout>
         </Layout>
     </div>

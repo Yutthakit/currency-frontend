@@ -31,7 +31,7 @@ function App() {
           <Route exact path="/Deposit" component={Deposit} />
           <Route exact path="/withdraw/:value" component={Withdraw} />
           <Route exact path="/status/:params" component={Status} />
-          <Route exact path="/" component={Home} />
+          <Route exact path="/:params" component={Home} />
         </Switch>
       </Layout>
     </div>

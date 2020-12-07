@@ -1,7 +1,11 @@
 .nav-side {
-  text-align: center;
-  margin: 2rem 0rem;
+  text-align: left;
+  margin: 2rem 2rem;
   color: white;
+}
+
+.border-nav {
+  border-bottom: 1px solid silver;
 }
 
 .img-profile {
