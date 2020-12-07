@@ -51,6 +51,44 @@ export default class chartXRP extends Component {
     });
   }
 
+  
+  buyCurrency() {
+    const {
+      investPerUnit,
+      name,
+      price,
+      amount
+    } = this.state
+
+    Axios.post('/buy-currency', {
+      value_invest: amount,
+      value_per_unit: investPerUnit,
+      currency_name: name,
+      currency_price_purchase: price,
+    }).then(() => {
+      console.log('success')
+    }).catch((err) => {
+      console.log(err)
+    });
+  }
+
+  sellCurrency() {
+    const {
+      investPerUnit,
+      name,
+      price,
+    } = this.state
+    Axios.post('/sell-currency', {
+      value_per_unit: investPerUnit,
+      currency_name: name,
+      currency_price_sell: price,
+    }).then((result) => {
+      console.log(result)
+    }).catch((err) => {
+      console.log(err)
+    });
+  }
+
   getData = (data) => {
     if (data) {
       this.setState({
@@ -98,6 +136,14 @@ export default class chartXRP extends Component {
     this.setState({
       visible: false,
     });
+    const {
+      type
+    } = this.state
+    if (type === 'buy') {
+      this.buyCurrency()
+    } else if (type === 'sell') {
+      this.sellCurrency()
+    }
   };
 
   handleCancel = () => {

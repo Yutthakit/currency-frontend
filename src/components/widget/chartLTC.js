@@ -57,6 +57,7 @@ export default class chartLTC extends Component {
       console.log(err)
     });
   }
+
   buyCurrency() {
     const {
       investPerUnit,
@@ -147,7 +148,6 @@ export default class chartLTC extends Component {
     } else if (type === 'sell') {
       this.sellCurrency()
     }
-    console.log(this.state)
   };
 
   handleCancel = () => {
@@ -164,65 +164,42 @@ export default class chartLTC extends Component {
   }
 
   render() {
-    return ( <
-      div >
-      <
-      h2 > LTC < /h2> <
-      Line ref = "chart"
-      data = {
-        this.state.data
-      }
-      /> <
-      Button type = "primary"
-      onClick = {
-        () => this.showModal('buy')
-      } >
-      Buy <
-      /Button> <
-      Button type = "primary"
-      onClick = {
-        () => this.showModal('sell')
-      } >
-      Sell <
-      /Button> <
-      Modal title = {
-        this.state.name
-      }
-      visible = {
-        this.state.visible
-      }
-      onOk = {
-        this.handleOk
-      }
-      onCancel = {
-        this.handleCancel
-      } >
-      <
-      p > Current Price: {
-        this.state.price
-      } < /p> <
-      p > Value Investment / Divestment: < InputNumber price = {
-        this.state.price
-      }
-      min = {
-        0.01
-      }
-      max = {
-        1000
-      }
-      defaultValue = {
-        1
-      }
-      onChange = {
-        this.onChange
-      }
-      /> </p >
-      <
-      p > Amount: {
-        this.state.amount
-      } < /p> <
-      /Modal> <
-      /div>
+    return ( 
+      <div>
+        <h2> LTC </h2> 
+      <Line ref = "chart"
+      data = {this.state.data}
+      />
+        <Button type = "primary"
+          onClick = {() => this.showModal('buy')} 
+        > 
+        Buy
+        </Button> 
+        <Button type = "primary"
+         onClick = {() => this.showModal('sell')} 
+        >
+          Sell
+        </Button> 
+        <Modal title = {this.state.name}
+      visible = {this.state.visible}
+      onOk = {this.handleOk}
+      onCancel = {this.handleCancel} 
+      >
+      <p>
+        Current Price: {this.state.price} </p> 
+        <p> Value Investment / Divestment: 
+          <InputNumber price = {this.state.price}
+      min = {0.01}
+      max = {1000}
+      defaultValue = {1}
+      onChange = {this.onChange}
+      /> 
+      </p>
+      <p> 
+        Amount: {this.state.amount} 
+      </p> 
+      </Modal> 
+      </div>
     );
   }
 

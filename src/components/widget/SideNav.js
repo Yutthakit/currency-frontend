@@ -13,7 +13,8 @@ const SideNav = (props) => {
     } else {
       this.props.history.push("/login")
     }
-  })
+  }, [])
+
 
   const callService = () => {
     Axios.get('/profile', {
